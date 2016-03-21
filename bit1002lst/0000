@@ -1,0 +1,15 @@
+from PIL import Image,ImageDraw,ImageFont 
+
+def addnum(img, num):
+	myfont = ImageFont.truetype('C:/windows/fonts/Arial.ttf')
+	mydraw = ImageDraw.Draw(img)
+	fillcolor = "#ff0000"
+	width, height = img.size
+	mydraw.text((width-40, 0), str(num), font=myfont, fill=fillcolor)
+	img.save('saved.jpg', 'jpeg')
+
+	return 0
+
+if __name__ == '__main__':
+	img = Image.open('0.bmp')
+	addnum(img, 10)
