@@ -1,0 +1,28 @@
+
+#coding=utf-8  
+import random  
+import string  
+
+def get_activation_code(number, length):
+
+    result = {}
+    source = list(string.ascii_uppercase)
+    for index in range(0,10):
+        source.append(str(index))
+
+    while len(result) < number:
+        key = ''
+        for index in range(length):
+            key += random.choice(source)
+        if key in result:
+            pass
+        else:
+            result[key] = 1
+
+        for key in result:
+        	print key
+
+if __name__ == "__main__":  
+    number = 200  
+    length = 16  
+    get_activation_code(number,length) 
