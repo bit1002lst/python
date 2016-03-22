@@ -1,0 +1,28 @@
+#coding:utf-8
+import sys
+import re
+
+def CalcWords1():    
+    f = open("english.txt", 'r')
+
+    lines = f.read()
+    words = re.findall(r'[a-zA-Z0-9]+', lines)
+    return len(words)
+
+def CalcWords2():
+    nums = 0
+    f = open("english.txt", 'r')
+    lines = f.readlines()
+    for line in lines:
+        #print line
+        for word in line.split():
+            print word
+            nums += 1
+    return nums
+
+
+
+if __name__ == '__main__':
+    print CalcWords1()
+    print CalcWords2()
+    print len([x for lines in open('english.txt', 'r').readlines() for x in lines.split()])
