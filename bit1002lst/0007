@@ -1,0 +1,81 @@
+#coding=utf-8
+#代码情况
+#1——纯代码
+#2——空行
+#3——注释
+#4——连续注释
+#5——代码+注释
+
+import os
+import re
+
+def main():
+    if os.path.exists(code_path):
+        for f in os.listdir(code_path):
+            if ".cpp" in f:
+                my_code = open(os.path.join(code_path, f))
+                lines = my_code.readlines()
+                num_empty = 0
+                pattern_empty = re.compile(r'\s')
+                num_code  = 0
+                num_zhushi = 0
+                num_line = 0
+                pattern_zhushi_1 = re.compile(r'//')
+                pattern_zhushi_2 = re.compile(r'/A *//')
+                pattern_zhushi_3 = re.compile(r'/\*')
+                pattern_zhushi_4 = re.compile(r'/A */\*')
+                pattern_zhushi_5 = re.compile(r'\*/')
+                pattern_zhushi_6 = re.compile(r'\*//Z')
+                is_zhushi = False
+                for line in lines:
+                    num_line += 1
+                    if is_zhushi:
+                        num_zhushi += 1
+                        if pattern_zhushi_6.match(line):
+                            is_zhushi = False
+                            continue
+                        else:
+                            is_zhushi = False
+                            num_code += 1
+                            continue
+                        continue
+                    else:
+                        #if pattern_empty.match(line):
+                        if len(line.split()) == 0:
+                            num_empty += 1
+                            continue
+                        elif pattern_zhushi_1.match(line):
+                            if pattern_zhushi_2.match(line):
+                                num_zhushi += 1
+                                continue
+                            else:
+                                num_code += 1
+                                num_zhushi += 1
+                                continue
+                        elif pattern_zhushi_3.match(line):
+                            is_zhushi = True
+                            if pattern_zhushi_4.match(line):
+                                num_zhushi += 1                                
+                                continue
+                            else:
+                                num_code += 1
+                                num_zhushi += 1
+                                continue
+                        else:
+                            num_code += 1
+
+
+
+
+    else:
+        print "wrong path"
+    print "code = ", num_code
+    print "empty = " , num_empty
+    print "zhushi = " , num_zhushi
+    print "line = ", num_line
+
+
+code_path = "code"
+
+if __name__ == '__main__':
+    main()
