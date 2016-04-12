@@ -1,0 +1,29 @@
+import os
+
+dairy_path = "dairy"
+
+def main():
+    if os.path.exists(dairy_path):
+        for f in os.listdir(dairy_path):
+            art = open(os.path.join(dairy_path, f), 'r')
+            dict_tmp = {}
+            content = art.read()
+            for word in content.split():
+                if dict_tmp.has_key(word):
+                    dict_tmp[word] = dict_tmp[word] + 1
+                else:
+                    dict_tmp[word] = 1
+            max_num = 0
+            max_word = ""
+            for key in dict_tmp:
+                
+                if dict_tmp[key] > max_num:
+                    max_num = dict_tmp[key]
+                    max_word = key
+            print "the max word in "+f+" is "+max_word
+            print dict_tmp[max_word]
+
+
+
+if __name__ == '__main__':
+    main()
