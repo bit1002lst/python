@@ -1,0 +1,36 @@
+#coding=utf-8
+
+from HTMLParser import HTMLParser
+from re import sub
+import urllib2
+#for chinese
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+class my_parser(HTMLParser):
+    def __init__(self):
+        self.body = ''
+        self.processing = None
+        HTMLParser.__init__(self)
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'body':
+            self.processing = 'body'
+            pass
+
+    def handle_data(self, data):
+        if self.processing:
+            self.body += data
+            pass
+
+    def handle_endtag(self, tag):
+        if tag == self.processing:
+            self.processing = None
+            print "the body in this html is:"
+            print self.body
+
+if __name__ == '__main__':
+    url = "http://www.bbc.com/"
+    html = urllib2.urlopen(url).read()
+    tp.feed(html)
