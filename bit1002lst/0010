@@ -1,0 +1,37 @@
+from random import choice
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageFilter
+from PIL import ImageDraw
+import string
+
+def generate_random_letter():
+    my_str = ""
+
+    for x in range(4):
+        my_str += choice(string.ascii_uppercase)
+
+    img = Image.new('RGB', (240, 60))
+    my_font = ImageFont.truetype('DejaVuSansMono-Bold.ttf', 36)
+    my_draw = ImageDraw.Draw(img)
+
+    for y in range(240):
+        for x in range(60):
+            my_draw.point((y, x), tuple([choice(range(128,255)) for color in range(3)]))
+            #my_draw.point((x,y), tuple([choice(range(128, 255) for color in range(3))]))
+            pass
+        pass
+
+    for index in range(len(my_str)):
+        my_draw.text((60 * index + 10, 10), my_str[index], tuple([choice(range(32, 127)) for color in range(3)]), my_font)
+
+    img = img.filter(ImageFilter.BLUR)
+    img.show()
+
+
+
+if __name__ == '__main__':
+    print tuple([choice(range(128,255)) for color in range(3)])
+    generate_random_letter()
+
+    
