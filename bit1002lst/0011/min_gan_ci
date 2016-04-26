@@ -1,0 +1,29 @@
+#coding=utf-8
+
+import os
+
+
+name_txt = "min_gan_ci.txt"
+def filter_word():    
+    my_txt = open(name_txt, "r")
+    my_list = []
+    for word in my_txt.readlines():
+        my_list.append(word.split())
+    #print my_list
+
+    while(1):
+        content = raw_input("input_please: ")
+        if content == "exist":
+            break
+        else:
+            str_show = "human right"
+            for word_tmp in range(len(my_list)):
+                #print my_list[word_tmp]
+                if "".join(my_list[word_tmp]) in content:
+                    str_show = "freedom"
+                    break
+                    
+            print str_show
+
+if __name__ == '__main__':
+    filter_word()
