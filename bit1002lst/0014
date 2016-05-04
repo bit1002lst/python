@@ -1,0 +1,35 @@
+import sys
+
+reload(sys)
+
+sys.setdefaultencoding('utf8')
+
+from HTMLParser import HTMLParser
+import urllib2
+
+class my_parser(HTMLParser):
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.pic_url = []
+    def handle_starttag(self, tag, attrs):
+        if tag == "img":
+            if(len(attrs) > 0):
+                print attrs
+                for key, value in attrs:
+                    if key == "src":
+                        self.pic_url.append(value)
+
+def save_pic(pic_url):
+    count = 1
+    for tmp_url in pic_url:
+        tmp = urllib2.urlopen(tmp_url)
+        f = open(str(count) + ".jpg", "wb")
+        f.write(tmp.read())
+        f.close()
+        count += 1
+
+if __name__ == '__main__':
+    html = urllib2.urlopen("http://tieba.baidu.com/p/2166231880").read()
+    MyParser = my_parser()
+    MyParser.feed(html)
+    save_pic(MyParser.pic_url)
